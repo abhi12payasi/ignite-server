@@ -4,6 +4,9 @@
      xsi:schemaLocation="
       http://www.springframework.org/schema/beans
       http://www.springframework.org/schema/beans/spring-beans.xsd">
+	  
+	  <property name="location" value="app.properties" />
+	  
   <bean class="org.apache.ignite.configuration.IgniteConfiguration">
     <property name="discoverySpi">
       <bean class="org.apache.ignite.spi.discovery.tcp.TcpDiscoverySpi">
