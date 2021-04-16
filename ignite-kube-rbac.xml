@@ -11,14 +11,14 @@
        http://www.springframework.org/schema/util
        http://www.springframework.org/schema/util/spring-util.xsd" >
 	  
-	 <!-- <context:property-placeholder location="app.properties"/> -->
+	 <context:property-placeholder /> 
 	  
   <bean class="org.apache.ignite.configuration.IgniteConfiguration">
     <property name="discoverySpi">
       <bean class="org.apache.ignite.spi.discovery.tcp.TcpDiscoverySpi">
         <property name="ipFinder">
            <bean class="org.apache.ignite.spi.discovery.tcp.ipfinder.kubernetes.TcpDiscoveryKubernetesIpFinder">
-             <property name="namespace" value="ignite-k8s" />
+             <property name="namespace" value="${KUBERNETES_NAMESPACE}" />
              <property name="serviceName" value="platform-commons-svc" />
            </bean>
         </property>
