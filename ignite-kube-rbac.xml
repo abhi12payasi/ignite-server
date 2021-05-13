@@ -2,27 +2,34 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:context="http://www.springframework.org/schema/context"
-       xmlns:util="http://www.springframework.org/schema/util"
 
        xsi:schemaLocation="http://www.springframework.org/schema/beans
        http://www.springframework.org/schema/beans/spring-beans.xsd
        http://www.springframework.org/schema/context
-       http://www.springframework.org/schema/context/spring-context.xsd
-       http://www.springframework.org/schema/util
-       http://www.springframework.org/schema/util/spring-util.xsd" >
-	  
-	 <context:property-placeholder /> 
-	  
-  <bean class="org.apache.ignite.configuration.IgniteConfiguration">
-    <property name="discoverySpi">
-      <bean class="org.apache.ignite.spi.discovery.tcp.TcpDiscoverySpi">
-        <property name="ipFinder">
-           <bean class="org.apache.ignite.spi.discovery.tcp.ipfinder.kubernetes.TcpDiscoveryKubernetesIpFinder">
-             <property name="namespace" value="${KUBERNETES_NAMESPACE}" />
-             <property name="serviceName" value="${IGNITE_SERVICE_NAME}" />
-           </bean>
+       http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <context:property-placeholder/>
+
+    <bean class="org.apache.ignite.configuration.IgniteConfiguration">
+        <property name="dataStorageConfiguration">
+            <bean class="org.apache.ignite.configuration.DataStorageConfiguration">
+                <property name="defaultDataRegionConfiguration">
+                    <bean class="org.apache.ignite.configuration.DataRegionConfiguration">
+                        <property name="persistenceEnabled" value="true"/>
+                    </bean>
+                </property>
+            </bean>
         </property>
-      </bean>
-    </property>
-  </bean>
+        <property name="authenticationEnabled" value="true"/>
+        <property name="discoverySpi">
+            <bean class="org.apache.ignite.spi.discovery.tcp.TcpDiscoverySpi">
+                <property name="ipFinder">
+                    <bean class="org.apache.ignite.spi.discovery.tcp.ipfinder.kubernetes.TcpDiscoveryKubernetesIpFinder">
+                        <property name="namespace" value="${KUBERNETES_NAMESPACE}"/>
+                        <property name="serviceName" value="${IGNITE_SERVICE_NAME}"/>
+                    </bean>
+                </property>
+            </bean>
+        </property>
+    </bean>
 </beans>
